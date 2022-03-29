@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noEmit": false,
+    "target": "ES6",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+  },
+  "exclude": [
+    "./*.js",
+    "./dist/**/*"
+  ]
+}

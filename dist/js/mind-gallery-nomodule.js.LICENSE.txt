@@ -1,0 +1,65 @@
+/*!
+ * CSSPlugin 3.9.1
+ * https://greensock.com
+ *
+ * Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
+/*!
+ * GSAP 3.9.1
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
+/*! ./CSSPlugin.js */
+
+/*! ./gsap-core.js */
+
+/*! ./mind-gallery */
+
+/*! ./sss/mind-gallery.css */
+
+/*! gsap */
+
+/*! react */
+
+/*! react-dom */
+
+/*!******************************!*\
+  !*** ./src/mind-gallery.tsx ***!
+  \******************************/
+
+/*!*******************************!*\
+  !*** external "window.React" ***!
+  \*******************************/
+
+/*!**********************************!*\
+  !*** ./src/sss/mind-gallery.css ***!
+  \**********************************/
+
+/*!**********************************!*\
+  !*** external "window.ReactDOM" ***!
+  \**********************************/
+
+/*!************************************!*\
+  !*** ./node_modules/gsap/index.js ***!
+  \************************************/
+
+/*!***************************************!*\
+  !*** ./src/mind-gallery-nomodule.tsx ***!
+  \***************************************/
+
+/*!****************************************!*\
+  !*** ./node_modules/gsap/CSSPlugin.js ***!
+  \****************************************/
+
+/*!****************************************!*\
+  !*** ./node_modules/gsap/gsap-core.js ***!
+  \****************************************/

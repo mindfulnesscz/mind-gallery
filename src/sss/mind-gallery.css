@@ -1,0 +1,13 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+body {
+  background: white;
+}
+
+.mind-gallery-data {
+  display: none;
+}
