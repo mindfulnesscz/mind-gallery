@@ -1,30 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import MindGallery from './mind-gallery'
+import { MindGalleryImage } from './mind-gallery-types'
 
 import './sss/mind-gallery.css';
 
-interface Props {
-  feed: Array<WmGalleryImage>
-  settings: WmGallerySettings
-}
 
-interface WmGalleryImage {
-  node: {
-    sourceUrl: string,
-    srcSet: string,
-    altText: string,
-    mediaDetails: { width: number, height: number }
-  }
-}
-interface WmGallerySettings {
-  imageRatio: number
-  throttleDelay: number
-  galleryEasing: { duration: number, ease: string }
-}
 
 const galSettings = {
-  imageRatio: 1.503703703703704,
+  imageRatio: 1.777777777777778,
   throttleDelay: 100,
   galleryEasing: { duration: 0.5, ease: 'easeInOutCubic' }
 }
@@ -39,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   [].forEach.call(gs, (div: HTMLDivElement) => {
 
-    let images: Array<WmGalleryImage> = [];
+    let images: Array<MindGalleryImage> = [];
     const cont = div.querySelector('.mind-gallery-container');
     const data = div.querySelector('.mind-gallery-data');
 
@@ -50,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sourceUrl: img.getAttribute('src'),
             srcSet: 'ahoj',
             altText: img.getAttribute('alt'),
+            caption: (img.getAttribute('caption') ? img.getAttribute('caption') : ''),
             mediaDetails: { width: parseInt(img.getAttribute('width')), height: parseInt(img.getAttribute('height')) }
           }
         }

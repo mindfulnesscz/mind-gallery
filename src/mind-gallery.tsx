@@ -1,30 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { MindGalleryImage, MindGalleryProps } from './mind-gallery-types'
+import Vimeo from '@vimeo/player';
 
 import './sss/mind-gallery.css';
 
 
-interface Props {
-  feed: Array<WmGalleryImage>
-  settings: WmGallerySettings
-}
-
-interface WmGalleryImage {
-  node: {
-    sourceUrl: string,
-    srcSet: string,
-    altText: string,
-    mediaDetails: { width: number, height: number }
-  }
-}
-
-interface WmGallerySettings {
-  imageRatio: number
-  throttleDelay: number
-  galleryEasing: { duration: number, ease: string }
-}
-
-const MindGallery: React.FC<Props> = ({ feed, settings }) => {
+const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
 
   const [activeTitle, setActiveTitle] = useState('');
   const [autoplayTimer, setAutoplayTimer] = useState<NodeJS.Timeout | null>(null);
@@ -39,12 +21,17 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
   const [galleryWidth, setGalleryWidth] = useState(0);
   const [active, setActive] = useState(0);
   const [throttled, setThrottled] = useState(false);
+  const [autoplayEnabled, setAutoplayEnabled] = useState(true); // needs to be true by default or obtained from settings var
+  const [currentPlayer, setCurrentPlayer] = useState(null);
+
+
   const galleryCont = useRef<HTMLDivElement>(null);
   const empty = Array.from({ length: feed.length }, () => React.createRef() as React.Ref<HTMLDivElement>);
   const imageElArr = useRef(empty) as any;
 
 
   const setGallerySizes = () => {
+    console.log('setting');
 
     if (!throttled) {
       if (galleryCont && galleryCont.current) {
@@ -53,12 +40,16 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
         galleryCont.current.style.height = w / settings.imageRatio + 'px';
 
         setGalleryWidth(w);
+
+        console.log('new height is ' + w / settings.imageRatio);
       }
+
       setThrottled(true);
 
       setTimeout(() => {
+        console.log('wtfwtf');
         setThrottled(false);
-      }, settings.throttleDelay);
+      }, 100);
     }
   };
 
@@ -76,15 +67,6 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
   const prevImage = () => {
     const prevId = active === 0 ? feed.length - 1 : active - 1;
     showImage(prevId, active, 'prev');
-  };
-
-  const wmLoader = (src: any) => {
-    const sub = src.src.substring(0, src.src.length - 5);
-    const sub_rep = sub.replace('-scaled', '');
-    const add = (src.width && src.width != 2048) ? '-' + src.width + 'x' + Math.round(src.width / imageRatio) : '';
-
-    return sub_rep + add + '.webp';
-
   };
 
   const showImage = (i: number, current = 0, button = '') => {
@@ -118,13 +100,15 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
           left: 0,
           ...settings.galleryEasing,
           onComplete: () => {
-            setAutoplayTimer(setTimeout(() => {
-              showImage(i + 1 === feed.length ? 0 : i + 1, i, 'next');
-            }, 5000));
+            if (autoplayEnabled) {
+              setAutoplayTimer(setTimeout(() => {
+                showImage(i + 1 === feed.length ? 0 : i + 1, i, 'next');
+              }, 5000));
+            }
           }
         });
       }
-      else {
+      else if (autoplayEnabled) {
         setAutoplayTimer(setTimeout(() => {
           showImage(i + 1 === feed.length ? 0 : i + 1, i, 'next');
         }, 5000));
@@ -133,6 +117,15 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
       setActive(i);
 
       setActiveTitle(feed[i].node.altText);
+
+      if (currentPlayer) {
+        console.log(currentPlayer)
+        currentPlayer.pause();
+      }
+      if (feed[i].node.caption != '') {
+        console.log(el_next);
+        setCurrentPlayer(new Vimeo(el_next.querySelector('iframe')))
+      }
 
     }
   };
@@ -149,18 +142,63 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
 
     setActiveTitle(feed[0].node.altText);
 
+    // test if there is https://player.vimeo.com/something in image caption 
+    const exp = /^https?:\/\/player.vimeo.com\/\b([-a-zA-Z0-9()@:%_\+.~#?&\/=])*$/
+    const reg = new RegExp(exp);
+    feed.map((key, index) => {
+      console.log(reg.test(key.node.caption));
+      if (reg.test(key.node.caption)) {
+        // shut the Autoplay feature if video is present. About to change to handle in v1.1
+        console.log('shutting outoplay');
+        setAutoplayEnabled(false);
+      }
+    });
 
-    showImage(0, feed.length - 1, 'init');
+    console.log(autoplayEnabled + ' - autoplay');
+
+
+    showImage(0, feed.length - 1, 'init')
 
 
     return () => {
       if (autoplayTimer)
         clearTimeout(autoplayTimer);
       setAutoplayTimer(null);
-      window.removeEventListener('resize', setGallerySizes);
+
+      //this was used in next.js app when was causing problems during routing
+      //window.removeEventListener('resize', setGallerySizes);
     };
 
-  }, []);
+  }, [autoplayEnabled]);
+
+
+  const getItem = (imageObject: MindGalleryImage) => {
+    const exp = /^https?:\/\/player.vimeo.com\/\b([-a-zA-Z0-9()@:%_\+.~#?&\/=])*$/
+    const reg = new RegExp(exp);
+    if (reg.test(imageObject.node.caption)) {
+      return (
+        <div className="mind-vimeo-responsive">
+          <iframe
+            className="mind-vimeo-responsive-item"
+            src={imageObject.node.caption}
+            width="1920"
+            height="1080"
+            allowFullScreen={true}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <img
+          className=""
+          src={imageObject.node.sourceUrl}
+          sizes="(min-width: 1024px) 1024px, 100vw"
+          alt={imageObject.node.altText}
+        />
+      )
+    }
+
+  }
 
   return (
     <div className="flex relative flex-wrap justify-center w-full ">
@@ -175,15 +213,10 @@ const MindGallery: React.FC<Props> = ({ feed, settings }) => {
               <div
                 key={`image-${index}`}
                 ref={imageElArr.current[index]}
-                className={`element - ${index} absolute left-full top-0  w-full h-full`}
+                className={`element-${index} absolute left-full top-0  w-full h-full`}
               >
                 <div className="relative w-full h-full">
-                  <img
-                    className=""
-                    src={key.node.sourceUrl}
-                    sizes="(min-width: 1024px) 1024px, 100vw"
-                    alt={key.node.altText}
-                  />
+                  {getItem(key)}
                 </div>
               </div>
             );

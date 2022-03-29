@@ -18,6 +18,13 @@
  * @author: Jack Doyle, jack@greensock.com
 */
 
+/*!
+ * weakmap-polyfill v2.0.1 - ECMAScript6 WeakMap polyfill
+ * https://github.com/polygonplanet/weakmap-polyfill
+ * Copyright (c) 2015-2020 Polygon Planet <polygon.planet.aqua@gmail.com>
+ * @license MIT
+ */
+
 /*! ./CSSPlugin.js */
 
 /*! ./gsap-core.js */
@@ -25,6 +32,15 @@
 /*! ./mind-gallery */
 
 /*! ./sss/mind-gallery.css */
+
+/*! @vimeo/player */
+
+/*! @vimeo/player v2.16.4 | (c) 2022 Vimeo | MIT License | https://github.com/vimeo/player.js */
+
+/*! Native Promise Only
+    v0.8.1 (c) Kyle Simpson
+    MIT License: http://getify.mit-license.org
+*/
 
 /*! gsap */
 
@@ -63,3 +79,7 @@
 /*!****************************************!*\
   !*** ./node_modules/gsap/gsap-core.js ***!
   \****************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/@vimeo/player/dist/player.es.js ***!
+  \******************************************************/

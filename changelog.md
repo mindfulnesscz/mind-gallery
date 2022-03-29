@@ -5,6 +5,7 @@ Mindgallery Developpment diary.
   
 - extract gsap and make working (currently throws error)
 - aspect ratio automatic
+- update autoplay to stop when played and play when stopped the video
 
 ## [1.0.1] - 2029-03-28
 
