@@ -6,7 +6,14 @@ Mindgallery Developpment diary.
 - extract gsap and make working (currently throws error)
 - aspect ratio automatic
 
+## [1.0.1] - 2029-03-28
 
+### Added
+
+ - Refactored file structure, added most of the base functionality
+ - Added mind-gallery-nomodule.js feature
+
+### Fixed
 
 ## [1.0.0] - 2022-03-28
 
