@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { MindGalleryImage, MindGalleryProps } from './mind-gallery-types'
+import { MindGalleryImage, MindGalleryProps } from './mind-gallery-types';
 import Vimeo from '@vimeo/player';
+import { GalleryArrow, GalleryBottomButton, GalleryBottomButtonHexagon, HexaBig } from './components/_icons';
 
-import './sss/mind-gallery.css';
+import './css/mind-gallery.css';
 
 
-const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
+const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
 
-  const [activeTitle, setActiveTitle] = useState('');
-  const [autoplayTimer, setAutoplayTimer] = useState<NodeJS.Timeout | null>(null);
+  const [activeTitle, setActiveTitle] = useState( '' );
+  const [autoplayTimer, setAutoplayTimer] = useState<NodeJS.Timeout | null>( null );
 
 
   const {
@@ -18,66 +19,66 @@ const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
     galleryEasing = { duration: .6, ease: 'Sine.easeInOut' }
   } = settings;
 
-  const [galleryWidth, setGalleryWidth] = useState(0);
-  const [active, setActive] = useState(0);
-  const [throttled, setThrottled] = useState(false);
-  const [autoplayEnabled, setAutoplayEnabled] = useState(true); // needs to be true by default or obtained from settings var
-  const [currentPlayer, setCurrentPlayer] = useState(null);
+  const [galleryWidth, setGalleryWidth] = useState( 0 );
+  const [active, setActive] = useState( 0 );
+  const [throttled, setThrottled] = useState( false );
+  const [autoplayEnabled, setAutoplayEnabled] = useState( true ); // needs to be true by default or obtained from settings var
+  const [currentPlayer, setCurrentPlayer] = useState( null );
 
 
-  const galleryCont = useRef<HTMLDivElement>(null);
-  const empty = Array.from({ length: feed.length }, () => React.createRef() as React.Ref<HTMLDivElement>);
-  const imageElArr = useRef(empty) as any;
+  const galleryCont = useRef<HTMLDivElement>( null );
+  const empty = Array.from( { length: feed.length }, () => React.createRef() as React.Ref<HTMLDivElement> );
+  const imageElArr = useRef( empty ) as any;
 
 
   const setGallerySizes = () => {
-    console.log('setting');
+    console.log( 'setting' );
 
-    if (!throttled) {
-      if (galleryCont && galleryCont.current) {
+    if ( !throttled ) {
+      if ( galleryCont && galleryCont.current ) {
 
         const w = galleryCont.current.offsetWidth;
         galleryCont.current.style.height = w / settings.imageRatio + 'px';
 
-        setGalleryWidth(w);
+        setGalleryWidth( w );
 
-        console.log('new height is ' + w / settings.imageRatio);
+        console.log( 'new height is ' + w / settings.imageRatio );
       }
 
-      setThrottled(true);
+      setThrottled( true );
 
-      setTimeout(() => {
-        console.log('wtfwtf');
-        setThrottled(false);
-      }, 100);
+      setTimeout( () => {
+        console.log( 'wtfwtf' );
+        setThrottled( false );
+      }, 100 );
     }
   };
 
-  const get_blur_url = (srcset: string) => {
-    return srcset.split(' ')[0];
+  const get_blur_url = ( srcset: string ) => {
+    return srcset.split( ' ' )[0];
   };
 
 
   const nextImage = () => {
     const nextId = active === feed.length - 1 ? 0 : active + 1;
-    showImage(nextId, active, 'next');
+    showImage( nextId, active, 'next' );
 
   };
 
   const prevImage = () => {
     const prevId = active === 0 ? feed.length - 1 : active - 1;
-    showImage(prevId, active, 'prev');
+    showImage( prevId, active, 'prev' );
   };
 
-  const showImage = (i: number, current = 0, button = '') => {
+  const showImage = ( i: number, current = 0, button = '' ) => {
 
     const el_current = imageElArr.current[current].current;
     const el_next = imageElArr.current[i].current;
 
-    if (el_current && el_next) {
+    if ( el_current && el_next ) {
 
-      if (autoplayTimer) {
-        clearTimeout(autoplayTimer);
+      if ( autoplayTimer ) {
+        clearTimeout( autoplayTimer );
       }
 
       //console.log( 'changing to '+ current +' - '+i );    
@@ -90,97 +91,92 @@ const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
 
 
 
-      if (button != 'init') {
+      if ( button != 'init' ) {
 
-        gsap.set(el_current, { left: 0 });
-        gsap.set(el_next, { left: i < current && button != 'next' || button == 'prev' ? '-100%' : '100%' });
+        gsap.set( el_current, { left: 0 } );
+        gsap.set( el_next, { left: i < current && button != 'next' || button == 'prev' ? '-100%' : '100%' } );
 
-        gsap.to(el_current, { left: i < current && button != 'next' || button == 'prev' ? '100%' : '-100%', ...settings.galleryEasing });
-        gsap.to(el_next, {
+        gsap.to( el_current, { left: i < current && button != 'next' || button == 'prev' ? '100%' : '-100%', ...settings.galleryEasing } );
+        gsap.to( el_next, {
           left: 0,
           ...settings.galleryEasing,
           onComplete: () => {
-            if (autoplayEnabled) {
-              setAutoplayTimer(setTimeout(() => {
-                showImage(i + 1 === feed.length ? 0 : i + 1, i, 'next');
-              }, 5000));
+            if ( autoplayEnabled ) {
+              setAutoplayTimer( setTimeout( () => {
+                showImage( i + 1 === feed.length ? 0 : i + 1, i, 'next' );
+              }, 5000 ) );
             }
           }
-        });
+        } );
       }
-      else if (autoplayEnabled) {
-        setAutoplayTimer(setTimeout(() => {
-          showImage(i + 1 === feed.length ? 0 : i + 1, i, 'next');
-        }, 5000));
+      else if ( autoplayEnabled ) {
+        setAutoplayTimer( setTimeout( () => {
+          showImage( i + 1 === feed.length ? 0 : i + 1, i, 'next' );
+        }, 5000 ) );
       }
 
-      setActive(i);
+      setActive( i );
 
-      setActiveTitle(feed[i].node.altText);
+      setActiveTitle( feed[i].node.altText );
 
-      if (currentPlayer) {
-        console.log(currentPlayer)
+      if ( currentPlayer ) {
+        console.log( currentPlayer );
         currentPlayer.pause();
       }
-      if (feed[i].node.caption != '') {
-        console.log(el_next);
-        setCurrentPlayer(new Vimeo(el_next.querySelector('iframe')))
+      if ( feed[i].node.type == 'vimeo' ) {
+        console.log( el_next );
+        setCurrentPlayer( new Vimeo( el_next.querySelector( 'iframe' ) ) );
       }
 
     }
   };
 
-  useEffect(() => {
+  useEffect( () => {
 
     setGallerySizes();
 
-    console.log(imageElArr.current[0].current)
+    console.log( imageElArr.current[0].current );
 
-    gsap.set(imageElArr.current[0].current, { left: 0 });
+    gsap.set( imageElArr.current[0].current, { left: 0 } );
 
-    window.addEventListener('resize', setGallerySizes);
+    window.addEventListener( 'resize', setGallerySizes );
 
-    setActiveTitle(feed[0].node.altText);
+    setActiveTitle( feed[0].node.altText );
 
-    // test if there is https://player.vimeo.com/something in image caption 
-    const exp = /^https?:\/\/player.vimeo.com\/\b([-a-zA-Z0-9()@:%_\+.~#?&\/=])*$/
-    const reg = new RegExp(exp);
-    feed.map((key, index) => {
-      console.log(reg.test(key.node.caption));
-      if (reg.test(key.node.caption)) {
+    feed.map( ( key, index ) => {
+
+      if ( key.node.type == 'vimeo' ) {
         // shut the Autoplay feature if video is present. About to change to handle in v1.1
-        console.log('shutting outoplay');
-        setAutoplayEnabled(false);
+        console.log( 'shutting outoplay' );
+        setAutoplayEnabled( false );
       }
-    });
+    } );
 
-    console.log(autoplayEnabled + ' - autoplay');
+    console.log( autoplayEnabled + ' - autoplay' );
 
 
-    showImage(0, feed.length - 1, 'init')
+    showImage( 0, feed.length - 1, 'init' );
 
 
     return () => {
-      if (autoplayTimer)
-        clearTimeout(autoplayTimer);
-      setAutoplayTimer(null);
+      if ( autoplayTimer )
+        clearTimeout( autoplayTimer );
+      setAutoplayTimer( null );
 
       //this was used in next.js app when was causing problems during routing
       //window.removeEventListener('resize', setGallerySizes);
     };
 
-  }, [autoplayEnabled]);
+  }, [autoplayEnabled] );
 
 
-  const getItem = (imageObject: MindGalleryImage) => {
-    const exp = /^https?:\/\/player.vimeo.com\/\b([-a-zA-Z0-9()@:%_\+.~#?&\/=])*$/
-    const reg = new RegExp(exp);
-    if (reg.test(imageObject.node.caption)) {
+  const getItem = ( imageObject: MindGalleryImage ) => {
+    if ( imageObject.node.type == 'vimeo' ) {
       return (
         <div className="mind-vimeo-responsive">
           <iframe
             className="mind-vimeo-responsive-item"
-            src={imageObject.node.caption}
+            src={imageObject.node.altText}
             width="1920"
             height="1080"
             allowFullScreen={true}
@@ -195,10 +191,10 @@ const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
           sizes="(min-width: 1024px) 1024px, 100vw"
           alt={imageObject.node.altText}
         />
-      )
+      );
     }
 
-  }
+  };
 
   return (
     <div className="flex relative flex-wrap justify-center w-full ">
@@ -208,7 +204,7 @@ const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
 
         {/* -------- IMAGES -------- */}
         {
-          feed.map((key, index) => {
+          feed.map( ( key, index ) => {
             return (
               <div
                 key={`image-${index}`}
@@ -216,50 +212,65 @@ const MindGallery: React.FC<MindGalleryProps> = ({ feed, settings }) => {
                 className={`element-${index} absolute left-full top-0  w-full h-full`}
               >
                 <div className="relative w-full h-full">
-                  {getItem(key)}
+                  {getItem( key )}
                 </div>
               </div>
             );
-          })
+          } )
         }
 
         {/* -------- LEFT AND RIGHT BUTTONS -------- */}
+
         <div
           onClick={nextImage}
-          className="absolute top-1/2 right-0 -mt-6 w-12 h-12 bg-gray-900/40 rounded-full border-2 border-gray-500 cursor-pointer sm:bottom-0 md:right-2"
+          className="mind-hexa-button absolute top-1/2 -mt-10 w-20 h-20 rounded-full cursor-pointer sm:bottom-0 md:right-2"
         >
-          <div className="relative top-3 left-2 w-5 h-5 border-t-2 border-r-2 border-white rotate-45"></div>
+          <div className="relative p-4 z-10 rotate-180"><GalleryArrow className={'fill-itsblue w-2 h-2'}/></div>
+          <div className="absolute z-0 w-full h-full top-0 left-0">
+            <HexaBig className="fill-white "></HexaBig>
+          </div>
         </div>
         <div
           onClick={prevImage}
-          className="absolute top-1/2 left-0 -mt-6 w-12 h-12 bg-gray-900/40 rounded-full border-2 border-gray-500 cursor-pointer md:left-2"
+          className="mind-hexa-button absolute top-1/2 left-0 -mt-10 w-20 h-20 rounded-full cursor-pointer md:left-2"
         >
-          <div className="relative top-3 left-4 w-5 h-5 border-b-2 border-l-2 border-white rotate-45"></div>
-        </div>
-
-        {/* -------- CIRCLES MENU -------- */}
-        <div className="flex absolute bottom-2 justify-center w-full h-9 rounded-full  lg:h-12">
-          <div className="px-2 bg-gray-900/40 rounded-full">
-            {
-              feed.map((el, i) =>
-                <div
-                  onClick={i !== active ? () => { showImage(i, active, ''); } : () => { console.log(''); }}
-                  key={`img-button-${i}`}
-                  className={`inline-block mx-1 lg:mx-2 mt-2 w-5 h-5 lg:w-8 lg:h-8 border border-white rounded-full ${i !== active ? 'cursor-pointer' : ''}`}
-                >
-                  <div className="flex justify-center content-center items-center w-full h-full">
-                    <div className={`w-3 h-3 lg:w-5 lg:h-5 rounded-full bg-white duration-500 transition-all ${i === active ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}></div>
-                  </div>
-                </div>
-              )
-            }
+          <div className="relative p-4 z-10"><GalleryArrow className={'fill-itsblue w-2 h-2'}/></div>
+          <div className="absolute z-0 w-full h-full top-0 left-0">
+            <HexaBig className="fill-white"></HexaBig>
           </div>
         </div>
-      </div>
 
+        
+        
+      </div>
       {/* -------- TITLES -------- */}
-      <div className="my-4 italic text-center text-gray-400">
+
+      {/*<div className="my-1 italic text-center text-gray-400">
         {activeTitle}
+      </div>*/}
+
+      {/* -------- HEXAGONS BOTTOM MENU -------- */}
+
+      <div className="flex justify-center w-full h-12 rounded-full  lg:h-16">
+        <div className="px-2 bg-white rounded-full">
+          {
+            feed.map( ( el, i ) =>
+              <div
+                onClick={i !== active ? () => { showImage( i, active, '' ); } : () => { console.log( '' ); }}
+                key={`img-button-${i}`}
+                className={`relative inline-block mx-1 lg:mx-1 mt-2 w-6 h-6 lg:w-10 lg:h-10 ${i !== active ? 'cursor-pointer' : ''}`}
+              >
+                <div className="absolute w-full h-full">
+                  <GalleryBottomButton className={`${i === active ? 'fill-itsblue' : 'fill-gray-400'}`} />
+                </div>
+
+                <div className={`absolute w-full h-full p-2 duration-300 transition-all ${i === active ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
+                  <GalleryBottomButtonHexagon className='fill-itsblue' />
+                </div>
+              </div>
+            )
+          }
+        </div>
       </div>
     </div>
   );

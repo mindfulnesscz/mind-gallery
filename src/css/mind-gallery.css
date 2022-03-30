@@ -1,8 +1,12 @@
+@import 'mind-gallery-ui/buttons.css';
+
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
+
+
 
 body {
   background: white;

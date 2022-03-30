@@ -16,26 +16,30 @@
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
-<div class="mind-gallery-wrapper">
-  <div class="mind-gallery-container">
-
-  </div>
-  <div class="mind-gallery-data">
-    <ul>
-      <li><img width="1624" height="1080" alt="image 1" src="imgs/1.jpg" /></li>
-      <li><img width="1624" caption="https://player.vimeo.com/video/649113914?h=9d8811d876" height="1080" alt="image 2" src="imgs/2.jpg" /></li>
-      <li><img width="1624" height="1080" alt="image 3" src="imgs/3.jpg" /></li>
-      <li><img width="1624" height="1080" alt="image 4" src="imgs/4.jpg" /></li>
-      <li><img width="1624" height="1080" alt="image 5" src="imgs/5.jpg" /></li>
-    </ul>
-  </div>
-</div>
+  
+  
+  
+  <div class="container m-auto">
+    <div class="mind-gallery-wrapper">
+      <div class="mind-gallery-container">
+        <!-- here's where the react component will be outputed -->
+      </div>
+      <div class="mind-gallery-data">
+        <ul>
+          <li><img width="1624" type="image" height="1080" alt="image 1" src="imgs/1.jpg" /></li>
+          <li><img width="1624" type="vimeo" alt="https://player.vimeo.com/video/649113914?h=9d8811d876" height="1080" alt="image 2" src="imgs/2.jpg" /></li>
+          <li><img width="1624" type="image" height="1080" alt="image 3" src="imgs/3.jpg" /></li>
+          <li><img width="1624" type="image" height="1080" alt="image 4" src="imgs/4.jpg" /></li>
+          <li><img width="1624" type="image" height="1080" alt="image 5" src="imgs/5.jpg" /></li>
+        </ul>
+      </div><!-- / .mind-gallery-data -->
+    </div><!-- / .mind-gallery-wrapper -->
+  </div><!-- / .container -->
 
   <script type="text/javascript" src="js/mind-gallery-nomodule.js"></script>
 
-
-
 </body>
+
 </html>
 
  <!-- 

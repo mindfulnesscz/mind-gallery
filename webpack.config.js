@@ -4,11 +4,11 @@
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-const path = require('path');
+const path = require( 'path' );
 
-const TerserJSPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+//const TerserJSPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' );
 
 module.exports = {
 
@@ -18,7 +18,7 @@ module.exports = {
   entry: {
     './dist/js/mind-gallery': './src/mind-gallery.tsx',
     './dist/js/mind-gallery-nomodule': './src/mind-gallery-nomodule.tsx',
-    './dist/css/mind-gallery': './src/sss/mind-gallery.css'
+    './dist/css/mind-gallery': './src/css/mind-gallery.css'
   },
 
   plugins: [new MiniCssExtractPlugin()],
@@ -70,7 +70,7 @@ module.exports = {
     minimize: true,
     minimizer: [
       //new TerserJSPlugin({}),
-      `...`,
+      '...',
       new CssMinimizerPlugin(),
     ],
   },
@@ -80,7 +80,7 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve( __dirname ),
     filename: '[name].js',
   },
 };

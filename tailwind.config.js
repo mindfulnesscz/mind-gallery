@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const colors = require('tailwindcss/colors');
+const colors = require( 'tailwindcss/colors' );
 
 module.exports = {
   //mode: 'jit',
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}', './dist/index.html'],
   media: false,
   theme: {
     extend: {
@@ -16,10 +16,10 @@ module.exports = {
 
       transparent: 'transparent',
       current: 'currentColor',
-      brown: {
-        DEFAULT: '#c1a796',
-        dark: '#7f6e58',
-        light: '#ecddc6',
+      itsblue: {
+        DEFAULT: '#00a5f5',
+        dark: '#007ce9',
+        light: '#00dbff',
       },
       gray: colors.neutral,
       white: colors.white,

@@ -7,8 +7,12 @@ export interface MindGalleryImage {
   node: {
     sourceUrl: string,
     srcSet: string,
+    sizes: string,
+    width: string,
+    height: string,
     altText: string,
     caption?: string,
+    type: string,
     mediaDetails: { width: number, height: number }
   }
 }
