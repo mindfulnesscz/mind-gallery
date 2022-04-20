@@ -8,6 +8,12 @@ Mindgallery Developpment diary.
 - update autoplay to stop when played and play when stopped the video
 - make sizes settings available on WP admin of the gallery block
 
+## [1.0.4] - 2029-04-20
+
+### Fixed
+
+ - Nav buttons fixed position on small screen and scale down navbuttons on smaller sizes
+
 ## [1.0.1] - 2029-03-28
 
 ### Added

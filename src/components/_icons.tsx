@@ -19,7 +19,9 @@ export const GalleryArrow: React.FC<Props> = ( { className } ) => {
 export const GalleryBottomButton: React.FC<Props> = ( { className } ) => {
   return (
     <svg className="w-full h-full" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 32 32">
-      <path className={className} d="M23.4,3.1L30.8,16l-7.4,12.9H8.6L1.2,16L8.6,3.1H23.4 M24,2.1H8L0,16l8,13.9h16L32,16L24,2.1L24,2.1z"/>
+      <g>
+        <polygon className={className} points="23.5,3 8.5,3 1,16 8.5,29 23.5,29 31,16"/>
+      </g>
     </svg>
   );
 };

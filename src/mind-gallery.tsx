@@ -223,7 +223,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
 
         <div
           onClick={nextImage}
-          className="mind-hexa-button absolute top-1/2 -mt-10 w-20 h-20 rounded-full cursor-pointer sm:bottom-0 md:right-2"
+          className="mind-hexa-button absolute top-1/2 -mt-7 md:-mt-10 w-14 h-14 md:w-20 md:h-20 rounded-full cursor-pointer sm:bottom-0 md:right-2 right-0"
         >
           <div className="relative p-4 z-10 rotate-180"><GalleryArrow className={'fill-itsblue w-2 h-2'}/></div>
           <div className="absolute z-0 w-full h-full top-0 left-0">
@@ -232,7 +232,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
         </div>
         <div
           onClick={prevImage}
-          className="mind-hexa-button absolute top-1/2 left-0 -mt-10 w-20 h-20 rounded-full cursor-pointer md:left-2"
+          className="mind-hexa-button absolute top-1/2 left-0 -mt-7 md:-mt-10 w-14 h-14 md:w-20 md:h-20 rounded-full cursor-pointer md:left-2"
         >
           <div className="relative p-4 z-10"><GalleryArrow className={'fill-itsblue w-2 h-2'}/></div>
           <div className="absolute z-0 w-full h-full top-0 left-0">
@@ -251,8 +251,8 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
 
       {/* -------- HEXAGONS BOTTOM MENU -------- */}
 
-      <div className="flex justify-center w-full h-12 rounded-full  lg:h-16">
-        <div className="px-2 bg-white rounded-full">
+      <div className="flex justify-center w-full rounded-full">
+        <div className="px-2">
           {
             feed.map( ( el, i ) =>
               <div
@@ -260,8 +260,8 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
                 key={`img-button-${i}`}
                 className={`relative inline-block mx-1 lg:mx-1 mt-2 w-6 h-6 lg:w-10 lg:h-10 ${i !== active ? 'cursor-pointer' : ''}`}
               >
-                <div className="absolute w-full h-full">
-                  <GalleryBottomButton className={`${i === active ? 'fill-itsblue' : 'fill-gray-400'}`} />
+                <div className="mind-bottom-button absolute w-full h-full">
+                  <GalleryBottomButton className={`${i === active ? 'stroke-itsblue' : 'stroke-gray-300'} fill-white`} />
                 </div>
 
                 <div className={`absolute w-full h-full p-2 duration-300 transition-all ${i === active ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
