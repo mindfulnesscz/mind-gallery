@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MindGallery from './mind-gallery';
-import { MindGalleryImage } from './mind-gallery-types';
+import { MindGalleryImage } from './mind-gallery.d';
 
 import './css/mind-gallery.css';
 
@@ -12,6 +12,8 @@ const galSettings = {
   throttleDelay: 100,
   galleryEasing: { duration: 0.5, ease: 'easeInOutCubic' }
 };
+
+declare let videojs:any;
 
 
 document.addEventListener( 'DOMContentLoaded', () => {
@@ -49,6 +51,16 @@ document.addEventListener( 'DOMContentLoaded', () => {
       <MindGallery feed={images} settings={galSettings} />,
       div
     );
+
+  } );
+
+ 
+  
+  // Loops generated video elements and initiates videojs on them
+
+  const VideoElements = document.querySelectorAll( 'video' );
+  [].forEach.call( VideoElements, ( el:HTMLVideoElement )=>{
+    videojs( el );
   } );
 
 } );

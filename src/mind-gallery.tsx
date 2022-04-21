@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { MindGalleryImage, MindGalleryProps } from './mind-gallery-types';
+//import { gsap } from 'gsap';
+import { MindGalleryImage, MindGalleryProps } from './mind-gallery.d';
 import Vimeo from '@vimeo/player';
 import { GalleryArrow, GalleryBottomButton, GalleryBottomButtonHexagon, HexaBig } from './components/_icons';
 
+
 import './css/mind-gallery.css';
+
+declare let gsap: any;
 
 
 const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
@@ -52,10 +55,6 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
         setThrottled( false );
       }, 100 );
     }
-  };
-
-  const get_blur_url = ( srcset: string ) => {
-    return srcset.split( ' ' )[0];
   };
 
 
@@ -145,7 +144,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
 
     feed.map( ( key, index ) => {
 
-      if ( key.node.type == 'vimeo' ) {
+      if ( key.node.type == 'vimeo' || key.node.type == 'mp4' ) {
         // shut the Autoplay feature if video is present. About to change to handle in v1.1
         console.log( 'shutting outoplay' );
         setAutoplayEnabled( false );
@@ -183,7 +182,29 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
           />
         </div>
       );
-    } else {
+    } 
+    else if ( imageObject.node.type == 'mp4' ) {
+      return (
+        <video
+          id="my-video"
+          className="video-js vjs-16-9"
+          controls
+          preload="auto"
+          width="960"
+          height="540"
+          poster={imageObject.node.sourceUrl}
+          data-setup="{}"
+        >
+          <source src={imageObject.node.altText} type="video/mp4" />
+          <p className="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to
+          a web browser that supports it.
+          </p>
+        </video>
+
+      );
+    } 
+    else {
       return (
         <img
           className=""

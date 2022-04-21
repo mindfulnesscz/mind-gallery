@@ -3,10 +3,14 @@ Mindgallery Developpment diary.
  
 ## [1.1.0] - Things to come in next version
   
-- extract gsap and make working (currently throws error)
+- DONE extract gsap and make working (currently throws error)
 - aspect ratio automatic (maybe according to the tallest image so that the gallery won't need to change dimension )
 - update autoplay to stop when played and play when stopped the video
 - make sizes settings available on WP admin of the gallery block
+
+## [1.0.5] - Things to come in next version
+
+- videojs support in case mp4 is provided
 
 ## [1.0.4] - 2029-04-20
 
