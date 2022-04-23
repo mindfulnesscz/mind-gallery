@@ -187,7 +187,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
       return (
         <video
           id="my-video"
-          className="video-js vjs-16-9"
+          className="video-js vjs-16-9 vjs-big-play-centered vjs-show-big-play-button-on-pause"
           controls
           preload="auto"
           width="960"
@@ -282,7 +282,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
                 className={`relative inline-block mx-1 lg:mx-1 mt-2 w-6 h-6 lg:w-10 lg:h-10 ${i !== active ? 'cursor-pointer' : ''}`}
               >
                 <div className="mind-bottom-button absolute w-full h-full">
-                  <GalleryBottomButton className={`${i === active ? 'stroke-itsblue' : 'stroke-gray-300'} fill-white`} />
+                  <GalleryBottomButton className={`${i === active ? 'stroke-itsblue' : 'stroke-white'} fill-white`} />
                 </div>
 
                 <div className={`absolute w-full h-full p-2 duration-300 transition-all ${i === active ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
