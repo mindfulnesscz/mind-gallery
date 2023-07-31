@@ -23,10 +23,13 @@ module.exports = {
 
   plugins: [new MiniCssExtractPlugin()],
 
+  
+  externalsType: 'window',
   externals: {
-    'react': 'window.React',
-    'react-dom': 'window.ReactDOM',
-    //'gsap': 'window.gsap'
+    
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'gsap': 'gsap'
   },
 
   module: {

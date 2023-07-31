@@ -1,17 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import MindGallery from './mind-gallery';
-import { MindGalleryImage } from './mind-gallery.d';
+import { MindGalleryImage, MindGallerySettings } from './mind-gallery.d';
 
 import './css/mind-gallery.css';
 
 
-
-const galSettings = {
-  imageRatio: 1.778,
-  throttleDelay: 100,
-  galleryEasing: { duration: 0.5, ease: 'easeInOutCubic' }
+// all are strings since they derived from html data- tags
+const defaultSettings = {
+  ratio: '1.778',
+  throttle: '100',
+  easingduration: '0.5',
+  easingtype: 'easeInOut',
+  type: 'default',
+  autoplay: 'true',
+  scale: 'contain'
 };
 
 declare let videojs:any;
@@ -27,8 +32,12 @@ document.addEventListener( 'DOMContentLoaded', () => {
   [].forEach.call( gs, ( div: HTMLDivElement ) => {
 
     const images: Array<MindGalleryImage> = [];
-    const data = div.querySelector( '.mind-gallery-data' );
+    const data = div.querySelector( '.mind-gallery-data' ) as HTMLDivElement;
     const cont = div.querySelector( '.mind-gallery-container' );
+
+    // update default settings with settings provided from html gallery settings
+    const dataObj:MindGallerySettings = {...defaultSettings, ...data.dataset};
+
 
     [].forEach.call( data.querySelectorAll( 'img' ), ( img: HTMLImageElement ) => {
       images.push(
@@ -50,7 +59,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
     console.log( images );
     console.log( cont );
     const root = createRoot( cont! );
-    root.render( <MindGallery feed={images} settings={galSettings} /> );
+    root.render( <MindGallery feed={images} settings={dataObj} /> );
     
 
   } );

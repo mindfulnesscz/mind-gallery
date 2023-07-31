@@ -1,33 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
-//import { gsap } from 'gsap';
+import  gsap from 'gsap'; // needs to be added without brackets because of the externals in webpack.config
 import { MindGalleryImage, MindGalleryProps } from './mind-gallery.d';
 import Vimeo from '@vimeo/player';
-import { GalleryArrow, GalleryBottomButton, GalleryBottomButtonHexagon, HexaBig } from './components/_icons';
 
+import { GalleryArrow, GalleryBottomButton, GalleryBottomButtonHexagon, HexaBig } from './components/_icons';
 
 import './css/mind-gallery.css';
 
-declare let gsap: any;
-
-
 const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
+
+  console.log( gsap );
 
   const [activeTitle, setActiveTitle] = useState( '' );
   const [autoplayTimer, setAutoplayTimer] = useState<NodeJS.Timeout | null>( null );
 
 
   const {
-    imageRatio = 1.618,
-    throttleDelay = 100,
-    galleryEasing = { duration: .8, ease: 'Sine.easeInOut' }
+    ratio = 1.618,
+    throttle = 100,
+    easingduration = '0.6',
+    easingtype = 'Sine.easeInOut',
+    autoplay = true,
+    scale = 'contain',
+    type = 'default' //Here's what comes next to separete types in different componentns and load dynamically based on the type provided
   } = settings;
 
   const [galleryWidth, setGalleryWidth] = useState( 0 );
   const [active, setActive] = useState( 0 );
   const [throttled, setThrottled] = useState( false );
-  const [autoplayEnabled, setAutoplayEnabled] = useState( true ); // needs to be true by default or obtained from settings var
+  const [autoplayEnabled, setAutoplayEnabled] = useState( autoplay ); // needs to be true by default or obtained from settings var
   const [currentPlayer, setCurrentPlayer] = useState( null );
 
 
@@ -43,22 +46,21 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
       if ( galleryCont && galleryCont.current ) {
 
         const w = galleryCont.current.offsetWidth;
-        galleryCont.current.style.height = w / imageRatio + 'px';
+        galleryCont.current.style.height = w / Number( ratio ) + 'px';
 
         setGalleryWidth( w );
 
-        console.log( 'new height is ' + w / imageRatio );
+        console.log( 'new height is ' + w / Number( ratio ) );
       }
 
       setThrottled( true );
 
       setTimeout( () => {
-        console.log( 'wtfwtf' );
         setThrottled( false );
-      }, throttleDelay );
+      }, Number( throttle ) 
+      );
     }
   };
-
 
   const nextImage = () => {
     const nextId = active === feed.length - 1 ? 0 : active + 1;
@@ -97,10 +99,11 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
         gsap.set( el_current, { left: 0 } );
         gsap.set( el_next, { left: i < current && button != 'next' || button == 'prev' ? '-100%' : '100%' } );
 
-        gsap.to( el_current, { left: i < current && button != 'next' || button == 'prev' ? '100%' : '-100%', galleryEasing } );
+        gsap.to( el_current, { left: i < current && button != 'next' || button == 'prev' ? '100%' : '-100%', ease: easingtype, duration:Number( easingduration ) } );
         gsap.to( el_next, {
           left: 0,
-          galleryEasing,
+          ease: easingtype,
+          duration: Number( easingduration ),
           onComplete: () => {
             if ( autoplayEnabled ) {
               setAutoplayTimer( setTimeout( () => {
@@ -133,9 +136,9 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
 
   useEffect( () => {
 
-    setGallerySizes();
+    //window.gsap = gsap;
 
-    console.log( imageElArr.current[0].current );
+    setGallerySizes();
 
     gsap.set( imageElArr.current[0].current, { left: 0 } );
 
@@ -204,7 +207,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
     else {
       return (
         <img
-          className="object-contain w-full h-full"
+          className={`object-${ scale } w-full h-full`}
           src={imageObject.node.sourceUrl}
           sizes="(min-width: 1024px) 1024px, 100vw"
           alt={imageObject.node.altText}

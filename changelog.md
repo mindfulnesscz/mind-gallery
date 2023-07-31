@@ -6,6 +6,7 @@ Mindgallery Developpment diary.
 
 - aspect ratio automatic (maybe according to the tallest image so that the gallery won't need to change dimension )
 - update autoplay to stop when played and play when stopped the video
+- Lightbox gallery feature
 
 ## [1.1.1] - Things to come in next version
   

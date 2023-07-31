@@ -17,7 +17,11 @@ export interface MindGalleryImage {
   }
 }
 export interface MindGallerySettings {
-  imageRatio: number
-  throttleDelay: number
-  galleryEasing: { duration: number, ease: string }
+  ratio: string
+  throttle: string
+  easingduration?: string
+  easingtype?: string
+  type?: string
+  autoplay?: string
+  scale?: string
 }

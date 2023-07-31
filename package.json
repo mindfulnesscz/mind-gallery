@@ -1,6 +1,6 @@
 {
   "name": "mind-gallery",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Simple and visual image and video gallery",
   "main": "src/index.js",
   "scripts": {
