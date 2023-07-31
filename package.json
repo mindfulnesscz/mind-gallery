@@ -1,8 +1,9 @@
 {
   "name": "mind-gallery",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Simple and visual image and video gallery",
   "main": "src/mind-gallery.tsx",
+  "types": "src/mind-gallery.d.ts",
   "scripts": {
     "start": "webpack --mode development --config webpack.config.js --watch",
     "build": "webpack --mode production --config webpack.config.js",
