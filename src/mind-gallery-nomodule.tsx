@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import MindGallery from './mind-gallery';
 import { MindGalleryImage } from './mind-gallery.d';
 
@@ -8,7 +9,7 @@ import './css/mind-gallery.css';
 
 
 const galSettings = {
-  imageRatio: 1.777777777777778,
+  imageRatio: 1.778,
   throttleDelay: 100,
   galleryEasing: { duration: 0.5, ease: 'easeInOutCubic' }
 };
@@ -26,8 +27,8 @@ document.addEventListener( 'DOMContentLoaded', () => {
   [].forEach.call( gs, ( div: HTMLDivElement ) => {
 
     const images: Array<MindGalleryImage> = [];
-    const cont = div.querySelector( '.mind-gallery-container' );
     const data = div.querySelector( '.mind-gallery-data' );
+    const cont = div.querySelector( '.mind-gallery-container' );
 
     [].forEach.call( data.querySelectorAll( 'img' ), ( img: HTMLImageElement ) => {
       images.push(
@@ -47,14 +48,13 @@ document.addEventListener( 'DOMContentLoaded', () => {
       );
     } );
     console.log( images );
-    ReactDOM.render(
-      <MindGallery feed={images} settings={galSettings} />,
-      div
-    );
+    console.log( cont );
+    const root = createRoot( cont! );
+    root.render( <MindGallery feed={images} settings={galSettings} /> );
+    
 
   } );
 
- 
   
   // Loops generated video elements and initiates videojs on them
 

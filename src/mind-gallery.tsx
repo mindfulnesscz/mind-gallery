@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 //import { gsap } from 'gsap';
 import { MindGalleryImage, MindGalleryProps } from './mind-gallery.d';
@@ -19,7 +21,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
   const {
     imageRatio = 1.618,
     throttleDelay = 100,
-    galleryEasing = { duration: .6, ease: 'Sine.easeInOut' }
+    galleryEasing = { duration: .8, ease: 'Sine.easeInOut' }
   } = settings;
 
   const [galleryWidth, setGalleryWidth] = useState( 0 );
@@ -41,11 +43,11 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
       if ( galleryCont && galleryCont.current ) {
 
         const w = galleryCont.current.offsetWidth;
-        galleryCont.current.style.height = w / settings.imageRatio + 'px';
+        galleryCont.current.style.height = w / imageRatio + 'px';
 
         setGalleryWidth( w );
 
-        console.log( 'new height is ' + w / settings.imageRatio );
+        console.log( 'new height is ' + w / imageRatio );
       }
 
       setThrottled( true );
@@ -53,7 +55,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
       setTimeout( () => {
         console.log( 'wtfwtf' );
         setThrottled( false );
-      }, 100 );
+      }, throttleDelay );
     }
   };
 
@@ -95,10 +97,10 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
         gsap.set( el_current, { left: 0 } );
         gsap.set( el_next, { left: i < current && button != 'next' || button == 'prev' ? '-100%' : '100%' } );
 
-        gsap.to( el_current, { left: i < current && button != 'next' || button == 'prev' ? '100%' : '-100%', ...settings.galleryEasing } );
+        gsap.to( el_current, { left: i < current && button != 'next' || button == 'prev' ? '100%' : '-100%', galleryEasing } );
         gsap.to( el_next, {
           left: 0,
-          ...settings.galleryEasing,
+          galleryEasing,
           onComplete: () => {
             if ( autoplayEnabled ) {
               setAutoplayTimer( setTimeout( () => {
@@ -115,7 +117,6 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
       }
 
       setActive( i );
-
       setActiveTitle( feed[i].node.altText );
 
       if ( currentPlayer ) {
@@ -153,17 +154,13 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
 
     console.log( autoplayEnabled + ' - autoplay' );
 
-
     showImage( 0, feed.length - 1, 'init' );
-
 
     return () => {
       if ( autoplayTimer )
         clearTimeout( autoplayTimer );
       setAutoplayTimer( null );
 
-      //this was used in next.js app when was causing problems during routing
-      //window.removeEventListener('resize', setGallerySizes);
     };
 
   }, [autoplayEnabled] );
@@ -207,7 +204,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
     else {
       return (
         <img
-          className=""
+          className="object-contain w-full h-full"
           src={imageObject.node.sourceUrl}
           sizes="(min-width: 1024px) 1024px, 100vw"
           alt={imageObject.node.altText}
@@ -221,7 +218,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
     <div className="flex relative flex-wrap justify-center w-full ">
       {/* -------- CONT-------- */}
 
-      <div ref={galleryCont} className="overflow-hidden relative w-full rounded-3xl">
+      <div ref={galleryCont} className="overflow-hidden relative w-full rounded-3xl bg-gray-100">
 
         {/* -------- IMAGES -------- */}
         {
@@ -232,7 +229,7 @@ const MindGallery: React.FC<MindGalleryProps> = ( { feed, settings } ) => {
                 ref={imageElArr.current[index]}
                 className={`element-${index} absolute left-full top-0  w-full h-full`}
               >
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full flex items-center">
                   {getItem( key )}
                 </div>
               </div>
