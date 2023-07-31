@@ -23,14 +23,18 @@ module.exports = {
 
   plugins: [new MiniCssExtractPlugin()],
 
-  
-  externalsType: 'window',
+  /* 
+  externals removed for npm package to export everything. 
+  All externals should be removed in the target component using this package
+  */
+ 
+  /*externalsType: 'window',
   externals: {
     
     'react': 'React',
     'react-dom': 'ReactDOM',
     'gsap': 'gsap'
-  },
+  },*/
 
   module: {
     rules: [
@@ -72,32 +76,10 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [
-      //new TerserJSPlugin({}),
+
       '...',
       new CssMinimizerPlugin(),
-    ],
-    /*splitChunks: {
-      chunks: 'all',
-      minSize: 0,
-      maxInitialRequests: 20,
-      maxAsyncRequests: 20,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name ( module, chunks, cacheGroupKey ) {
-            const packageName = module.context.match(
-              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-            )[1];
-            return `${cacheGroupKey}.${packageName.replace( '@', '' )}`;
-          }
-        },
-        common: {
-          minChunks: 2,
-          priority: -10
-        }
-      }
-    },
-    runtimeChunk: 'single'*/
+    ]
   },
 
   resolve: {

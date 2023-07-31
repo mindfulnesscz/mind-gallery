@@ -1,4 +1,14 @@
 /*!
+ * GSAP 3.12.2
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2023, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
+/*!
  * weakmap-polyfill v2.0.4 - ECMAScript6 WeakMap polyfill
  * https://github.com/polygonplanet/weakmap-polyfill
  * Copyright (c) 2015-2021 polygonplanet <polygon.planet.aqua@gmail.com>
@@ -11,3 +21,33 @@
     v0.8.1 (c) Kyle Simpson
     MIT License: http://getify.mit-license.org
 */
+
+/**
+ * @license React
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
